@@ -43,7 +43,7 @@ def Riemann(metric_tensor, inverse_metric_tensor, coordinates):
     return riemann
 
 
-def Ricci(metric_tensor, inverse_metric_tensor, coordinates):
+def Ricci_tensor(metric_tensor, inverse_metric_tensor, coordinates):
     num_coordinates = len(coordinates)
     ricci = [[0 for _ in range(num_coordinates)] for _ in range(num_coordinates)]
 
@@ -62,7 +62,46 @@ def Ricci(metric_tensor, inverse_metric_tensor, coordinates):
                         sum_term += term1
             ricci[i][j] = sum_term
 
-    return ricci
+    return ricci_tensor
+
+
+
+def Ricci_scalar(metric_tensor, inverse_metric_tensor, coordinates):
+    num_coordinates = len(coordinates)
+    ricci_scalar = 0
+    
+    for i in range(num_coordinates):
+        for j in range(num_coordinates):
+            sum_term = 0
+            for k in range(num_coordinates):
+                for l in range(num_coordinates):
+                    for m in range(num_coordinates):
+                        term1 = .5 * inverse_metric_tensor[i, m] * (
+                            diff(diff(metric_tensor[m, l], coordinates[j]), coordinates[k]) -
+                            diff(diff(metric_tensor[m, k], coordinates[j]), coordinates[l]) +
+                            diff(diff(metric_tensor[j, k], coordinates[m]), coordinates[l]) -
+                            diff(diff(metric_tensor[j, l], coordinates[m]), coordinates[k])
+                        )
+                        sum_term += term1
+            ricci_scalar += sum_term
+
+    return ricci_scalar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
